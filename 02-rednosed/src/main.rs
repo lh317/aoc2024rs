@@ -1,6 +1,6 @@
 use std::fs;
 
-use eyre::{eyre, Context, OptionExt, Result};
+use eyre::{Context, OptionExt, Result};
 
 fn is_valid(report: &[i32]) -> bool {
     report
