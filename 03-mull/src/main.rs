@@ -13,10 +13,7 @@ fn sum_mul_insns(body: &str) -> i32 {
     MUL_RE
         .captures_iter(body)
         .map(|c| {
-            c.iter()
-                .skip(1)
-                .map(|m| m.unwrap().as_str().parse::<i32>().unwrap())
-                .product::<i32>()
+            c.iter().skip(1).map(|m| m.unwrap().as_str().parse::<i32>().unwrap()).product::<i32>()
         })
         .sum()
 }

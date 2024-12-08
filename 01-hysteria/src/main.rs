@@ -20,11 +20,7 @@ fn main() -> Result<()> {
     }
     left.sort();
     right.sort();
-    let sum: i32 = left
-        .iter()
-        .zip(right.iter())
-        .map(|(l, r)| (l - r).abs())
-        .sum();
+    let sum: i32 = left.iter().zip(right.iter()).map(|(l, r)| (l - r).abs()).sum();
     println!("{}", sum);
     let similiarity: i32 = left.iter().try_fold(0, |acc, l| {
         i32::try_from(right.iter().filter(|r| l == *r).count()).map(|r| acc + l * r)

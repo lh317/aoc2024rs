@@ -36,23 +36,19 @@ fn main() -> Result<()> {
         let col = col as isize;
         if *c == 'X' {
             // Right
-            if puzzle.slice(s![row, col..min(col + 4, columns)]) == xmas
-            {
+            if puzzle.slice(s![row, col..min(col + 4, columns)]) == xmas {
                 count += 1;
             }
             // Left
-            if puzzle.slice(s![row, max(0, col - 3)..col + 1]) == samx
-            {
+            if puzzle.slice(s![row, max(0, col - 3)..col + 1]) == samx {
                 count += 1;
             }
             // Down
-            if puzzle.slice(s![row..min(row + 4, rows), col]) == xmas
-            {
+            if puzzle.slice(s![row..min(row + 4, rows), col]) == xmas {
                 count += 1;
             }
             // Up
-            if puzzle.slice(s![max(0, row - 3)..row + 1, col]) == samx
-            {
+            if puzzle.slice(s![max(0, row - 3)..row + 1, col]) == samx {
                 count += 1;
             }
             // L-R-D
@@ -60,7 +56,8 @@ fn main() -> Result<()> {
             //  M
             //   A
             //    S
-            if puzzle.slice(s![row..min(row + 4, rows), col..min(col + 4, columns)]).diag() == xmas {
+            if puzzle.slice(s![row..min(row + 4, rows), col..min(col + 4, columns)]).diag() == xmas
+            {
                 count += 1;
             }
             // R-L-U
@@ -68,7 +65,7 @@ fn main() -> Result<()> {
             //  A
             //   M
             //    X
-            if puzzle.slice(s![max(0, row-3)..row+1, max(0, col-3)..col+1]).diag() == samx {
+            if puzzle.slice(s![max(0, row - 3)..row + 1, max(0, col - 3)..col + 1]).diag() == samx {
                 count += 1;
             }
             // L-R-U
@@ -77,7 +74,8 @@ fn main() -> Result<()> {
             //  M
             // X
             // Reverse row order to make L-R-D
-            if puzzle.slice(s![max(0, row-3)..row+1;-1, col..min(col + 4, columns)]).diag() == xmas {
+            if puzzle.slice(s![max(0, row-3)..row+1;-1, col..min(col + 4, columns)]).diag() == xmas
+            {
                 count += 1;
             }
             // R-L-D
@@ -95,23 +93,41 @@ fn main() -> Result<()> {
             // M
             //  A
             //   S
-            let lrd = puzzle.slice(s![max(0, row-1)..min(row +2,rows), max(0, col-1)..min(col+2, columns)]).diag() == mas;
+            let lrd = puzzle
+                .slice(s![
+                    max(0, row - 1)..min(row + 2, rows),
+                    max(0, col - 1)..min(col + 2, columns)
+                ])
+                .diag()
+                == mas;
             // R - L -U
             // S
             //  A
             //   M
-            let rlu = puzzle.slice(s![max(0, row-1)..min(row +2,rows), max(0, col-1)..min(col+2, columns)]).diag() == sam;
+            let rlu = puzzle
+                .slice(s![
+                    max(0, row - 1)..min(row + 2, rows),
+                    max(0, col - 1)..min(col + 2, columns)
+                ])
+                .diag()
+                == sam;
             // L - R -U
             //   S
             //  A
             // M
-            let lru = puzzle.slice(s![max(0, row-1)..min(row +2,rows);-1, max(0, col-1)..min(col+2, columns)]).diag() == mas;
+            let lru = puzzle
+                .slice(s![max(0, row-1)..min(row +2,rows);-1, max(0, col-1)..min(col+2, columns)])
+                .diag()
+                == mas;
             // R-L-D
             //   M
             //  A
             // S
-            let rld = puzzle.slice(s![max(0, row-1)..min(row +2,rows), max(0, col-1)..min(col+2, columns);-1]).diag() == mas;
-            if (lrd || rlu) && (lru || rld)  {
+            let rld = puzzle
+                .slice(s![max(0, row-1)..min(row +2,rows), max(0, col-1)..min(col+2, columns);-1])
+                .diag()
+                == mas;
+            if (lrd || rlu) && (lru || rld) {
                 xmas_count += 1;
             }
         }

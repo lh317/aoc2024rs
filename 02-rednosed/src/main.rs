@@ -5,11 +5,7 @@ use eyre::{Context, OptionExt, Result};
 fn is_valid(report: &[i32]) -> bool {
     report
         .windows(2)
-        .map(|w| {
-            w[0].checked_sub(w[1])
-                .filter(|r| r.abs() >= 1 && r.abs() <= 3)
-                .map(i32::signum)
-        })
+        .map(|w| w[0].checked_sub(w[1]).filter(|r| r.abs() >= 1 && r.abs() <= 3).map(i32::signum))
         .try_fold(0, |acc, r| r.filter(|s| acc == 0 || acc == *s))
         .is_some()
 }
@@ -24,10 +20,7 @@ fn main() -> Result<()> {
         let lineno = lineno + 1;
         let report = line
             .split_whitespace()
-            .map(|p| {
-                p.parse()
-                    .wrap_err_with(|| format!("{fname}:{lineno}: error parsing number"))
-            })
+            .map(|p| p.parse().wrap_err_with(|| format!("{fname}:{lineno}: error parsing number")))
             .collect::<Result<Vec<i32>>>()?;
         if is_valid(&report) {
             valid += 1;
@@ -36,7 +29,13 @@ fn main() -> Result<()> {
                 let removed = report
                     .iter()
                     .enumerate()
-                    .filter_map(|(j, r)| if i != j { Some(*r) } else { None })
+                    .filter_map(|(j, r)| {
+                        if i != j {
+                            Some(*r)
+                        } else {
+                            None
+                        }
+                    })
                     .collect::<Vec<i32>>();
                 if is_valid(&removed) {
                     dampened += 1;
