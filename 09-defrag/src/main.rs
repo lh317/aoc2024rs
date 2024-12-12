@@ -114,7 +114,7 @@ fn main() -> Result<()> {
         let index = second.iter().position(|ex| matches!(ex, DiskExtent::File { id: fid, .. } if id == *fid)).unwrap();
         //println!("Defragmenting {id}: {index}");
         match second[index] {
-            DiskExtent::File { id, len} => {
+            DiskExtent::File {len, ..} => {
                 let free_space = second[..index].iter().enumerate().find_map(|(i,ex)| match ex {
                     DiskExtent::Free { len: flen } if *flen >= len => Some((i, *flen)),
                     _ => None
